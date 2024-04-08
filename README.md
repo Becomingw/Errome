@@ -13,7 +13,7 @@ Errome 是一个 Python 库，旨在为 Python 应用程序提供一个简单的
 通过克隆 GitHub 仓库的方式安装 Errome：
 
 ```bash
-git clone https://github.com/yourusername/errome.git
+git clone https://github.com/Becomingw/Errome.git
 cd errome
 pip install .
 ```
