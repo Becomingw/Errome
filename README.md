@@ -14,7 +14,7 @@ Errome 是一个 Python 库，旨在为 Python 应用程序提供一个简单的
 
 ```bash
 git clone https://github.com/Becomingw/Errome.git
-cd errome
+cd Errome
 pip install .
 ```
 
@@ -25,7 +25,7 @@ pip install .
 创建一个 Errome 实例：
 
 ```python
-from errome import Errome
+from Errome import Errome
 #### 初始化邮件发送器
 email_sender = Errome(sender_email="your_email@example.com",
                     password="your_password",
