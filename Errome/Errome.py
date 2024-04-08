@@ -1,5 +1,6 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
+import pkg_resources
 from email.mime.text import MIMEText
 import datetime
 from functools import wraps
@@ -13,6 +14,8 @@ class Errome:
         self.password = password
         self.recever = recever
         self.start_time = datetime.datetime.now()
+        self.ok_html_path = pkg_resources.resource_filename('Errome', 'templates/ok.html')
+        self.erro_html_path = pkg_resources.resource_filename('Errome', 'templates/erro.html')
 
     def set_start(self):
         self.start_time = datetime.datetime.now()
@@ -27,7 +30,7 @@ class Errome:
         time_cost = current_time - self.start_time
         if statu == "ok":
             message["Subject"] = "运行完成"
-            with open("ok.html", 'r', encoding='utf-8') as file:
+            with open(self.ok_html_path, 'r', encoding='utf-8') as file:
                 html_content = file.read()
             html_content = html_content.replace(f"NowTime", current_time.strftime("%Y-%m-%d %H:%M:%S"))
             html_content = html_content.replace(f"Timeuse", str(time_cost.seconds)+"秒")
@@ -36,7 +39,7 @@ class Errome:
             message.attach(part)
         else:
             message["Subject"] = "运行错误"
-            with open("erro.html", 'r', encoding='utf-8') as file:
+            with open(self.erro_html_path, 'r', encoding='utf-8') as file:
                 html_content = file.read()
             html_content = html_content.replace(f"NowTime", current_time.strftime("%Y-%m-%d %H:%M:%S"))
             html_content = html_content.replace(f"Timeuse", str(time_cost.seconds)+"秒")

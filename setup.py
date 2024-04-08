@@ -9,6 +9,11 @@ setup(
     author='BecomingW',
     author_email='Becomingw@qq.com',
     url='https://github.com/Becomingw/Errome.git',
+    package_data={
+
+        'Errome': ['templates/*.html'],
+    },
+    include_package_data=True,
     install_requires=[
         # 依赖列表
     ],
