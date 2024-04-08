@@ -64,6 +64,6 @@ class Errome:
                 return result
             except Exception as e:
                 error_message = traceback.format_exc()
-                self.send_email("error", error_message)
+                self.send_email(error_message)
                 raise
         return wrapped
