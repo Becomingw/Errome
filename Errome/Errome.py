@@ -1,6 +1,5 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
-import pkg_resources
 from email.mime.text import MIMEText
 import datetime
 from functools import wraps
@@ -14,8 +13,6 @@ class Errome:
         self.password = password
         self.recever = recever
         self.start_time = datetime.datetime.now()
-        self.ok_html_path = pkg_resources.resource_filename('Errome', 'templates/ok.html')
-        self.erro_html_path = pkg_resources.resource_filename('Errome', 'templates/erro.html')
 
     def set_start(self):
         self.start_time = datetime.datetime.now()
@@ -30,7 +27,7 @@ class Errome:
         time_cost = current_time - self.start_time
         if statu == "ok":
             message["Subject"] = "运行完成"
-            with open(self.ok_html_path, 'r', encoding='utf-8') as file:
+            with open('Errome\ok.html', 'r', encoding='utf-8') as file:
                 html_content = file.read()
             html_content = html_content.replace(f"NowTime", current_time.strftime("%Y-%m-%d %H:%M:%S"))
             html_content = html_content.replace(f"Timeuse", str(time_cost.seconds)+"秒")
@@ -39,7 +36,7 @@ class Errome:
             message.attach(part)
         else:
             message["Subject"] = "运行错误"
-            with open(self.erro_html_path, 'r', encoding='utf-8') as file:
+            with open('Errom\erro.html', 'r', encoding='utf-8') as file:
                 html_content = file.read()
             html_content = html_content.replace(f"NowTime", current_time.strftime("%Y-%m-%d %H:%M:%S"))
             html_content = html_content.replace(f"Timeuse", str(time_cost.seconds)+"秒")
@@ -67,3 +64,17 @@ class Errome:
                 self.send_email(error_message)
                 raise
         return wrapped
+    
+if __name__ == "__main__":
+    # 邮件发送者和接收者
+    sender_email = "wangmengf1999@163.com"  # 替换为你的163邮箱地址
+    receiver_email = "1173586205@qq.com"  # 接收者的邮箱地址
+    password = "RWFGUSDRQGQCVMHI"  # 你的163邮箱密码
+    Email = Errome(sender_email=sender_email, recever=receiver_email, password=password)
+
+    @Email.notify
+    def test_function():
+        print("apple")
+
+        
+    test_function()
