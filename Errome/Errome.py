@@ -67,9 +67,9 @@ class Errome:
     
 if __name__ == "__main__":
     # 邮件发送者和接收者
-    sender_email = "wangmengf1999@163.com"  # 替换为你的163邮箱地址
-    receiver_email = "1173586205@qq.com"  # 接收者的邮箱地址
-    password = "RWFGUSDRQGQCVMHI"  # 你的163邮箱密码
+    sender_email = "xxxxxxx@163.com"  # 替换为你的163邮箱地址
+    receiver_email = "xxxxxx@qq.com"  # 接收者的邮箱地址
+    password = "xxxxxxxxxxxx"  # 你的163邮箱密码
     Email = Errome(sender_email=sender_email, recever=receiver_email, password=password)
 
     @Email.notify
