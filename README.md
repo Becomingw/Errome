@@ -25,7 +25,7 @@ pip install .
 创建一个 Errome 实例：
 
 ```python
-from Errome import Errome
+from Errome.Errome import Errome
 #### 初始化邮件发送器
 email_sender = Errome(sender_email="your_email@example.com",
                     password="your_password",
