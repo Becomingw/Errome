@@ -27,7 +27,7 @@ class Errome:
         time_cost = current_time - self.start_time
         if statu == "ok":
             message["Subject"] = "运行完成"
-            with open('templates\ok.html', 'r', encoding='utf-8') as file:
+            with open(r'Errome\templates\ok.html', 'r', encoding='utf-8') as file:
                 html_content = file.read()
             html_content = html_content.replace(f"NowTime", current_time.strftime("%Y-%m-%d %H:%M:%S"))
             html_content = html_content.replace(f"Timeuse", str(time_cost.seconds)+"秒")
@@ -36,7 +36,7 @@ class Errome:
             message.attach(part)
         else:
             message["Subject"] = "运行错误"
-            with open('templates\erro.html', 'r', encoding='utf-8') as file:
+            with open(r'Errome\templates\erro.html', 'r', encoding='utf-8') as file:
                 html_content = file.read()
             html_content = html_content.replace(f"NowTime", current_time.strftime("%Y-%m-%d %H:%M:%S"))
             html_content = html_content.replace(f"Timeuse", str(time_cost.seconds)+"秒")

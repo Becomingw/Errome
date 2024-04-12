@@ -9,6 +9,5 @@ setup(
     author='BecomingW',
     author_email='Becomingw@qq.com',
     url='https://github.com/Becomingw/Errome.git',
-    include_package_data=True,
-    data_files=[('templates', ['templates/ok.html', 'templates/erro.html'])], 
+    include_package_data=True
 )
