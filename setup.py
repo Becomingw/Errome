@@ -4,7 +4,7 @@ with open('README.md', 'r', encoding='utf-8') as fp:
     long_description = fp.read()
 setup(
     name='Errome',
-    version='0.3',
+    version='0.3.1',
     packages=find_packages(),
     description='A program error or completion email notification tool.',
     long_description=long_description,
