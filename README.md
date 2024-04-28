@@ -10,16 +10,28 @@ Errome 是一个 Python 库，旨在为 Python 应用程序提供一个简单的
 
 ## 示例：
 
-![图](fig.png)
+<img src="示例.jpg" alt="图" width=120 />
 
 ## 安装
 
-通过克隆 GitHub 仓库的方式安装 Errome：
+1.通过克隆 GitHub 仓库的方式安装 Errome：
 
 ```bash
 git clone https://github.com/Becomingw/Errome.git
 cd Errome
 pip install .
+```
+2.通过pip安装：
+```bash
+pip install Errome
+```
+
+## 使用
+
+在 Python 文件中导入 Errome 库：
+
+```python
+from Errome.Errome import Errome
 ```
 
 ## 快速开始
@@ -31,7 +43,7 @@ pip install .
 ```python
 from Errome.Errome import Errome
 #### 初始化邮件发送器
-email_sender = Errome(sender_email="your_email@example.com",
+email_sender = Errome(sender_email="your_email@163.com",
                     password="your_password",
                     receiver="receiver_email@example.com")
 ```
