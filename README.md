@@ -1,6 +1,19 @@
-# Errome 📧
+<h1 align="center">
+  <br>
+  📧 Errome
+  <br>
+</h1>
+
+<p align="center">
+  <i>高效、简单的Python程序监控方案</i>
+</p>
+
+<hr>
 
 Errome 是一个 Python 库，旨在为 Python 应用程序提供一个简单的方式来发送运行状态通知邮件。无论程序运行成功或遇到错误，Errome 都能自动发送包含运行时间和错误信息（如有）的邮件给指定的接收者。
+使用的时候，将你的所有主程序包装到一个def中，然后你只需要一行代码即可完成对你的程序的监控😁
+
+**使用场景：① Tmux 后台运行的程序 ;② 长时间运行的程序**
 
 ## Update
 
@@ -10,6 +23,7 @@ Errome 是一个 Python 库，旨在为 Python 应用程序提供一个简单的
   - 优化了类的调用逻辑
   - 增加了一个简单调用方法，但是记住这可能并不是一个好的方法。
   - 加入更加精简的调用方法**ERM.notify(recever)**
+- 之后应该不会再进行功能性更新，只修复bug
 
 ## 功能
 
@@ -59,7 +73,10 @@ from Errome import ERM
 
 @ERM.notify(recever="receiver_email@example.com")
 def test_function():
-    print("This function does something.")
+  ### 以下是你的主程序，比如一个爬虫，一个训练模型，一个数据处理过程
+    print("This is your main program")
+
+test_function()
 ```
 
 ### 其他更Sample的使用方法 🤭
@@ -105,16 +122,18 @@ my_function()
 email_sender.set_start()
 ```
 
-然后后续使用email_sender.send_email（statu）来发送邮件。
+然后后续使用email_sender.send_email（statu）来发送邮件。这里的statu可设置为"ok"或其他的str,"ok"时发送运行成功的邮件，不为"ok"时发送运行错误的邮件。在notify中，的做法是使用try-except来判断是否运行成功，并使用traceback.format_exc()来获取错误信息，将错误信息传入statu。
+**🚨 <span style="color: red;">因此，如果的项目具有隐秘必要，尤其是服务器项目时，不建议使用ERM，而是使用Errome来监控你的程序，甚至必要时使用自建域名邮箱</span>**
 
 ## 配置
 
 - **sender_email**: 发件人邮箱地址。
 - **password**: 发件人邮箱的密码或应用密码(具体来说是邮箱的secret_token)。
 - **recever**: 邮件接收者的邮箱地址。
-- 相关介绍：[qq邮箱SMTP设置](https://service.mail.qq.com/detail?search=POP3/SMTP%E6%9C%8D%E5%8A%A1)
+- 相关介绍：[QQ邮箱SMTP设置](https://service.mail.qq.com/detail?search=POP3/SMTP%E6%9C%8D%E5%8A%A1)
 
 ### To DO:
 
 - 接入GPT对错误信息进行解释(暂时不会接入)
-- 之后应该不会再更新新的功能，只修复bug
+- 完善方法使用文档
+
