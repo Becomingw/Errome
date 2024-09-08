@@ -1,4 +1,4 @@
-# Errome
+# Errome 📧
 
 Errome 是一个 Python 库，旨在为 Python 应用程序提供一个简单的方式来发送运行状态通知邮件。无论程序运行成功或遇到错误，Errome 都能自动发送包含运行时间和错误信息（如有）的邮件给指定的接收者。
 
@@ -9,7 +9,7 @@ Errome 是一个 Python 库，旨在为 Python 应用程序提供一个简单的
   - 支持自定义SMTP服务器
   - 优化了类的调用逻辑
   - 增加了一个简单调用方法，但是记住这可能并不是一个好的方法。
-  - 加入更加精简的调用方法ERM.notify(recever)
+  - 加入更加精简的调用方法**ERM.notify(recever)**
 
 ## 功能
 
@@ -17,10 +17,11 @@ Errome 是一个 Python 库，旨在为 Python 应用程序提供一个简单的
 - 在函数成功执行后发送运行成功的邮件通知
 - 捕获函数运行时的异常，并发送包含错误信息的邮件通知
 
-## 示例：
+## 图示：
 
 <img src="示例.jpg" alt="报错时图" width=120 />
-<img src="start.png" alt="开始时图" width=120 />
+
+报错图示
 
 ## 安装
 
@@ -110,7 +111,8 @@ email_sender.set_start()
 
 - **sender_email**: 发件人邮箱地址。
 - **password**: 发件人邮箱的密码或应用密码(具体来说是邮箱的secret_token)。
-- **receiver**: 邮件接收者的邮箱地址。
+- **recever**: 邮件接收者的邮箱地址。
+- 相关介绍：[qq邮箱SMTP设置](https://service.mail.qq.com/detail?search=POP3/SMTP%E6%9C%8D%E5%8A%A1)
 
 ### To DO:
 
