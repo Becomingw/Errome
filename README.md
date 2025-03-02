@@ -23,6 +23,9 @@ Errome 是一个 Python 库，旨在为 Python 应用程序提供一个简单的
   - 优化了类的调用逻辑
   - 增加了一个简单调用方法，但是记住这可能并不是一个好的方法。
   - 加入更加精简的调用方法**ERM.notify(recever)**
+- 2025.03.02 更新：
+  - 新增环境变量配置支持
+  - 可通过环境变量设置邮箱信息，无需在代码中硬编码
 - 之后应该不会再进行功能性更新，只修复bug
 
 ## 功能
@@ -127,10 +130,54 @@ email_sender.set_start()
 
 ## 配置
 
+### 方式一：直接在代码中配置
+
 - **sender_email**: 发件人邮箱地址。
 - **password**: 发件人邮箱的密码或应用密码(具体来说是邮箱的secret_token)。
 - **recever**: 邮件接收者的邮箱地址。
 - 相关介绍：[QQ邮箱SMTP设置](https://service.mail.qq.com/detail?search=POP3/SMTP%E6%9C%8D%E5%8A%A1)
+
+### 方式二：使用环境变量配置
+
+你可以通过设置环境变量来配置邮箱信息，这样可以避免在代码中硬编码敏感信息：
+
+```bash
+# Linux/Mac
+export ERROME_SENDER_EMAIL="your_email@example.com"
+export ERROME_PASSWORD="your_password"
+export ERROME_RECEIVER="receiver@example.com"
+
+# Windows (命令提示符)
+set ERROME_SENDER_EMAIL=your_email@example.com
+set ERROME_PASSWORD=your_password
+set ERROME_RECEIVER=receiver@example.com
+
+# Windows (PowerShell)
+$env:ERROME_SENDER_EMAIL="your_email@example.com"
+$env:ERROME_PASSWORD="your_password"
+$env:ERROME_RECEIVER="receiver@example.com"
+```
+
+设置环境变量后，可以直接使用Errome，无需提供参数：
+
+```python
+from Errome import Errome
+
+# 直接使用环境变量中的配置
+email_sender = Errome()  
+
+# 或者使用ERM类（只需配置ERROME_RECEIVER环境变量）
+from Errome import ERM
+email_sender = ERM()  
+
+@email_sender.notify
+def my_function():
+    print("This function does something.")
+
+my_function()
+```
+
+如果既没有在代码中提供参数，也没有设置环境变量，Errome会抛出明确的错误提示。
 
 ### To DO:
 

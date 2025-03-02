@@ -1,4 +1,5 @@
 import datetime
+import os
 
 # from pkg_resources import resource_filename
 import importlib.resources as pkg_resources
@@ -13,13 +14,23 @@ from functools import wraps
 class Errome:
     _instance = None
 
-    def __init__(self, sender_email, password, recever, smtp_server=None):
+    def __init__(self, sender_email=None, password=None, recever=None, smtp_server=None, message=None):
         if Errome._instance is None:
             Errome._instance = self
-        self.sender_email = sender_email
+            
+        # 从环境变量获取值，如果参数未提供
+        self.sender_email = sender_email or os.environ.get('ERROME_SENDER_EMAIL')
+        self.password = password or os.environ.get('ERROME_PASSWORD')
+        self.recever = recever or os.environ.get('ERROME_RECEIVER')
+        
+        # 验证必要的值是否存在
+        if not all([self.sender_email, self.password, self.recever]):
+            raise ValueError(
+                "Please provide sender_email, password, and recever either as parameters "
+                "or set them as environment variables (ERROME_SENDER_EMAIL, ERROME_PASSWORD, ERROME_RECEIVER)"
+            )
+            
         self.sender_name = "Errome程序运行情况提示"
-        self.password = password
-        self.recever = recever
         self.start_time = datetime.datetime.now()
         self.platform = sys.platform
         self.smtp_server = (
@@ -28,6 +39,7 @@ class Errome:
             else smtp_server
         )
         self.file_header = "templates\\" if "windows" in self.platform else "templates/"
+        self.define_message = message
 
     def set_start(self):
         self.start_time = datetime.datetime.now()
@@ -36,15 +48,20 @@ class Errome:
         self.set_start()
         if project_name is None:
             project_name = f"{self.start_time.strftime('%Y-%m-%d %H:%M:%S')}"
+        self.define_message = define_message
         if define_message is None:
-            define_message = "无"
+            self.define_message = "无"
         message = MIMEMultipart("alternative")
 
         message["From"] = f"{self.sender_name}"
         message["To"] = self.recever
         message["Subject"] = f"{project_name}在Errome的监护下开始运行"
-        with pkg_resources.open_text("Errome.templates", "start.html") as file:
+        
+        # 获取模板文件的绝对路径
+        template_dir = os.path.join(os.path.dirname(__file__), 'templates')
+        with open(os.path.join(template_dir, 'start.html'), 'r', encoding='utf-8') as file:
             html_content = file.read()
+        
         html_content = html_content.replace(
             "NowTime", self.start_time.strftime("%Y-%m-%d %H:%M:%S")
         )
@@ -75,7 +92,9 @@ class Errome:
             define_message = "无"
         if statu == "ok":
             message["Subject"] = f"{project_name}_运行完成"
-            with pkg_resources.open_text("Errome.templates", "ok.html") as file:
+            # 获取模板文件的绝对路径
+            template_dir = os.path.join(os.path.dirname(__file__), 'templates')
+            with open(os.path.join(template_dir, 'ok.html'), 'r', encoding='utf-8') as file:
                 html_content = file.read()
             total_seconds = int(time_cost.total_seconds())
             minutes = total_seconds // 60
@@ -92,7 +111,9 @@ class Errome:
             message.attach(part)
         else:
             message["Subject"] = f"{project_name}_运行错误"
-            with pkg_resources.open_text("Errome.templates", "erro.html") as file:
+            # 获取模板文件的绝对路径
+            template_dir = os.path.join(os.path.dirname(__file__), 'templates')
+            with open(os.path.join(template_dir, 'erro.html'), 'r', encoding='utf-8') as file:
                 html_content = file.read()
             total_seconds = int(time_cost.total_seconds())
             minutes = total_seconds // 60
@@ -188,12 +209,15 @@ class ERM(Errome):
             message=message,
         )
 
-    def __init__(self, recever):
+    def __init__(self, recever=None, message=None):
+        # 如果没有提供recever，从环境变量获取
+        recever = recever or os.environ.get('ERROME_RECEIVER')
         super().__init__(
             sender_email="Errome@scosine.org",
             password="pbFPloo6P34CbtHo",
             recever=recever,
             smtp_server="smtp.feishu.cn",
+            message=message
         )
 
 
@@ -205,7 +229,7 @@ if __name__ == "__main__":
     # Email = Errome(sender_email=sender_email, recever=receiver_email, password=password)
     Email = ERM(recever=receiver_email)
 
-    @ERM.notify(recever=receiver_email)
+    @ERM.notify(recever=receiver_email, message="测试邮件")
     def test_function():
         i = 10 / 0
         # timesleep(10)
