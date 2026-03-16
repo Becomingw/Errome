@@ -128,6 +128,8 @@ email_sender.set_start()
 然后后续使用email_sender.send_email（statu）来发送邮件。这里的statu可设置为"ok"或其他的str,"ok"时发送运行成功的邮件，不为"ok"时发送运行错误的邮件。在notify中，的做法是使用try-except来判断是否运行成功，并使用traceback.format_exc()来获取错误信息，将错误信息传入statu。
 **🚨 <span style="color: red;">因此，如果的项目具有隐秘必要，尤其是服务器项目时，不建议使用ERM，而是使用Errome来监控你的程序，甚至必要时使用自建域名邮箱</span>**
 
+**ERM的邮箱已被取消，请关注新的项目 [Lowatch_clint](https://github.com/Becomingw/logwatch_client) ,非入侵的方式实现log监控
+
 ## 配置
 
 ### 方式一：直接在代码中配置
